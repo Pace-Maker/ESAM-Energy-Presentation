@@ -1,14 +1,21 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { ChevronLeft, ChevronRight, Calendar, CheckCircle, Clock, Download } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import Image from "next/image"
+import { useState } from "react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Calendar,
+  CheckCircle,
+  Clock,
+  Download,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 
 export default function Component() {
-  const [currentSlide, setCurrentSlide] = useState(0)
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const timelineData = [
     {
@@ -126,7 +133,7 @@ export default function Component() {
         },
       ],
     },
-  ]
+  ];
 
   const slides = [
     // Title Slide
@@ -147,40 +154,40 @@ export default function Component() {
         timeline: timelineData,
       },
     },
-  ]
+  ];
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length)
-  }
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
-  }
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  };
 
   const goToSlide = (index: number) => {
-    setCurrentSlide(index)
-  }
+    setCurrentSlide(index);
+  };
 
   const exportToPDF = async () => {
     // Function to convert image to base64
     const imageToBase64 = async (url: string): Promise<string> => {
       try {
-        const response = await fetch(url)
-        const blob = await response.blob()
+        const response = await fetch(url);
+        const blob = await response.blob();
         return new Promise((resolve) => {
-          const reader = new FileReader()
-          reader.onloadend = () => resolve(reader.result as string)
-          reader.readAsDataURL(blob)
-        })
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.readAsDataURL(blob);
+        });
       } catch (error) {
-        console.error("Error converting image:", error)
-        return ""
+        console.error("Error converting image:", error);
+        return "";
       }
-    }
+    };
 
     // Get base64 versions of logos
-    const nectarLogoBase64 = await imageToBase64("/nectar-logo.png")
-    const esamLogoBase64 = await imageToBase64("/esam-logo.png")
+    const nectarLogoBase64 = await imageToBase64("/nectar-logo.png");
+    const esamLogoBase64 = await imageToBase64("/esam-logo.png");
 
     const htmlContent = `
       <!DOCTYPE html>
@@ -543,7 +550,7 @@ export default function Component() {
                               <div class="task-bullet"></div>
                               <span class="task-text">${item}</span>
                             </li>
-                          `,
+                          `
                             )
                             .join("")}
                         </ul>
@@ -551,27 +558,27 @@ export default function Component() {
                     </div>
                   </div>
                 </div>
-              `,
+              `
                 )
                 .join("")}
             </div>
           </div>
         </body>
       </html>
-    `
+    `;
 
     // Open print dialog with the content
-    const printWindow = window.open("", "_blank")
+    const printWindow = window.open("", "_blank");
     if (printWindow) {
-      printWindow.document.write(htmlContent)
-      printWindow.document.close()
+      printWindow.document.write(htmlContent);
+      printWindow.document.close();
       printWindow.onload = () => {
         setTimeout(() => {
-          printWindow.print()
-        }, 1000) // Increased delay to ensure images load
-      }
+          printWindow.print();
+        }, 1000); // Increased delay to ensure images load
+      };
     }
-  }
+  };
 
   const renderSlide = (slide: any) => {
     switch (slide.type) {
@@ -600,8 +607,12 @@ export default function Component() {
             </div>
 
             <div className="relative z-10 text-white max-w-5xl mx-auto px-8 mt-16">
-              <h1 className="text-7xl font-bold mb-8 leading-tight text-white drop-shadow-lg">{slide.content.title}</h1>
-              <h2 className="text-4xl font-light mb-12 text-white drop-shadow-md">{slide.content.subtitle}</h2>
+              <h1 className="text-7xl font-bold mb-8 leading-tight text-white drop-shadow-lg">
+                {slide.content.title}
+              </h1>
+              <h2 className="text-4xl font-light mb-12 text-white drop-shadow-md">
+                {slide.content.subtitle}
+              </h2>
               <div className="flex flex-col items-center justify-center gap-6 text-xl">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
                   <Badge
@@ -620,7 +631,9 @@ export default function Component() {
                   </Badge>
                 </div>
                 <div className="mt-8 text-center">
-                  <p className="text-2xl font-semibold text-white drop-shadow-md">9 Week Development Cycle</p>
+                  <p className="text-2xl font-semibold text-white drop-shadow-md">
+                    9 Week Development Cycle
+                  </p>
                   <p className="text-lg text-white drop-shadow-sm mt-2 font-medium">
                     Comprehensive Energy Management Implementation
                   </p>
@@ -628,7 +641,7 @@ export default function Component() {
               </div>
             </div>
           </div>
-        )
+        );
 
       case "timeline-overview":
         return (
@@ -666,18 +679,29 @@ export default function Component() {
                       <div className="ml-12 flex-1">
                         <Card className="border-blue-200 shadow-lg hover:shadow-xl transition-shadow">
                           <CardHeader className="bg-gradient-to-r from-blue-600 to-orange-500 text-white">
-                            <CardTitle className="text-2xl font-bold">{week.week}</CardTitle>
+                            <CardTitle className="text-2xl font-bold">
+                              {week.week}
+                            </CardTitle>
                           </CardHeader>
                           <CardContent className="p-6">
                             <div className="text-blue-800">
-                              <h3 className="font-semibold text-lg mb-3">{week.tasks[0].title}</h3>
+                              <h3 className="font-semibold text-lg mb-3">
+                                {week.tasks[0].title}
+                              </h3>
                               <div className="space-y-2">
-                                {week.tasks[0].items.map((item: string, itemIndex: number) => (
-                                  <div key={itemIndex} className="flex items-start">
-                                    <CheckCircle className="w-4 h-4 text-orange-500 mr-2 mt-1 flex-shrink-0" />
-                                    <span className="text-sm leading-relaxed whitespace-pre-line">{item}</span>
-                                  </div>
-                                ))}
+                                {week.tasks[0].items.map(
+                                  (item: string, itemIndex: number) => (
+                                    <div
+                                      key={itemIndex}
+                                      className="flex items-start"
+                                    >
+                                      <CheckCircle className="w-4 h-4 text-orange-500 mr-2 mt-1 flex-shrink-0" />
+                                      <span className="text-sm leading-relaxed whitespace-pre-line">
+                                        {item}
+                                      </span>
+                                    </div>
+                                  )
+                                )}
                               </div>
                             </div>
                           </CardContent>
@@ -689,12 +713,12 @@ export default function Component() {
               </div>
             </div>
           </div>
-        )
+        );
 
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   return (
     <div className="w-full h-screen bg-white flex flex-col">
@@ -704,17 +728,23 @@ export default function Component() {
       {/* Navigation - Hidden in print/PDF */}
       <div className="bg-gradient-to-r from-blue-800 to-orange-600 text-white p-4 flex items-center justify-between print:hidden">
         <div className="flex items-center space-x-4">
-          <Button variant="ghost" size="sm" onClick={prevSlide} className="text-white hover:bg-white/20">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={prevSlide}
+            className="text-white hover:bg-white/20"
+          >
             <ChevronLeft className="w-4 h-4 mr-1" />
             Previous
           </Button>
-          <Button variant="ghost" size="sm" onClick={nextSlide} className="text-white hover:bg-white/20">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={nextSlide}
+            className="text-white hover:bg-white/20"
+          >
             Next
             <ChevronRight className="w-4 h-4 ml-1" />
-          </Button>
-          <Button variant="ghost" size="sm" onClick={exportToPDF} className="text-white hover:bg-white/20">
-            <Download className="w-4 h-4 mr-1" />
-            Export PDF
           </Button>
         </div>
 
@@ -725,7 +755,9 @@ export default function Component() {
               key={index}
               onClick={() => goToSlide(index)}
               className={`w-3 h-3 rounded-full transition-colors ${
-                index === currentSlide ? "bg-white" : "bg-blue-600 hover:bg-blue-500"
+                index === currentSlide
+                  ? "bg-white"
+                  : "bg-blue-600 hover:bg-blue-500"
               }`}
             />
           ))}
@@ -736,5 +768,5 @@ export default function Component() {
         </div>
       </div>
     </div>
-  )
+  );
 }
